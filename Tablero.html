@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablero Interactivo de Medición de Pobreza (CONEVAL 2008-2018)</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #0284c7;
+            --accent: #e11d48;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #334155;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 30px 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2rem;
+        }
+
+        header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1.05rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+        }
+
+        .card-header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            color: var(--primary);
+            font-size: 1.35rem;
+        }
+
+        .content-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        @media (max-width: 992px) {
+            .content-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-box {
+            width: 100%;
+            height: 380px;
+        }
+
+        .table-box {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 10px 12px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .explanation {
+            margin-top: 20px;
+            background-color: #f0f9ff;
+            border-left: 4px solid var(--secondary);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .explanation h4 {
+            margin: 0 0 8px 0;
+            color: var(--primary);
+        }
+
+        .explanation p {
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .conclusion-section {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 30px;
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--primary);
+        }
+
+        .conclusion-section h2 {
+            color: var(--primary);
+            margin-top: 0;
+        }
+
+        .conclusion-section ul {
+            padding-left: 20px;
+        }
+
+        .conclusion-section li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Tablero Analítico de Pobreza multidimensional en México (2008–2018)</h1>
+        <p>Análisis estadístico basado en el Comunicado de Prensa No. 10 de CONEVAL</p>
+    </header>
+
+    <div class="dashboard-grid">
+
+        <!-- GRÁFICO 1 -->
+        <div class="card">
+            <div class="card-header">
+                <h2>1. Evolución Temporal: Población en Pobreza (Línea de Tiempo)</h2>
+            </div>
+            <div class="content-container">
+                <div>
+                    <div id="chart_line" class="chart-box"></div>
+                </div>
+                <div class="table-box">
+                    <h3>Pobreza Total y Extrema (Millones de Personas)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Año</th>
+                                <th>Pobreza (Millones)</th>
+                                <th>Pobreza Extrema (Millones)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>2008</td><td>49.5</td><td>12.3</td></tr>
+                            <tr><td>2010</td><td>52.8</td><td>12.9</td></tr>
+                            <tr><td>2012</td><td>53.3</td><td>11.4</td></tr>
+                            <tr><td>2014</td><td>55.3</td><td>11.5</td></tr>
+                            <tr><td>2016</td><td>53.4</td><td>9.3</td></tr>
+                            <tr><td>2018</td><td>52.4</td><td>9.3</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="explanation">
+                <h4>Explicación y Justificación del Gráfico</h4>
+                <p><strong>Información:</strong> Muestra la trayectoria del número de personas en situación de pobreza y pobreza extrema en México en un lapso de 10 años.<br>
+                <strong>¿Por qué es adecuado?</strong> El <em>Gráfico de Líneas (Line Chart)</em> es la herramienta estándar ideal para mostrar la evolución continua de variables cuantitativas a lo largo de series de tiempo, permitiendo identificar tendencias, picos (como el máximo de pobreza en 2014) y divergencias entre ambas variables.</p>
+            </div>
+        </div>
+
+        <!-- GRÁFICO 2 -->
+        <div class="card">
+            <div class="card-header">
+                <h2>2. Comparativa Carencias Sociales: 2008 vs. 2018 (Barras Agrupadas)</h2>
+            </div>
+            <div class="content-container">
+                <div>
+                    <div id="chart_bar" class="chart-box"></div>
+                </div>
+                <div class="table-box">
+                    <h3>Porcentaje de Carencias Sociales Nacionales</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Indicador de Carencia Social</th>
+                                <th>2008 (%)</th>
+                                <th>2018 (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Rezago educativo</td><td>21.9%</td><td>16.9%</td></tr>
+                            <tr><td>Acceso a servicios de salud</td><td>38.4%</td><td>16.2%</td></tr>
+                            <tr><td>Acceso a la seguridad social</td><td>65.0%</td><td>57.3%</td></tr>
+                            <tr><td>Calidad y espacios de la vivienda</td><td>17.7%</td><td>11.1%</td></tr>
+                            <tr><td>Servicios básicos en la vivienda</td><td>22.9%</td><td>19.8%</td></tr>
+                            <tr><td>Acceso a la alimentación</td><td>21.7%</td><td>20.4%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="explanation">
+                <h4>Explicación y Justificación del Gráfico</h4>
+                <p><strong>Información:</strong> Compara la incidencia porcentual de las seis carencias sociales multidimensionales entre el año inicial (2008) y el año final (2018) del estudio.<br>
+                <strong>¿Por qué es adecuado?</strong> El <em>Gráfico de Barras Agrupadas (Bar/Column Chart)</em> facilita la comparación directa y discreta entre múltiples categorías en dos momentos puntuales. Permite visualizar rápidamente cuáles carencias tuvieron una mejora sustancial (p. ej., salud) frente a las que permanecieron estancadas (p. ej., alimentación).</p>
+            </div>
+        </div>
+
+        <!-- GRÁFICO 3 -->
+        <div class="card">
+            <div class="card-header">
+                <h2>3. Composición Poblacional por Vulnerabilidad 2018 (Gráfico Circular)</h2>
+            </div>
+            <div class="content-container">
+                <div>
+                    <div id="chart_pie" class="chart-box"></div>
+                </div>
+                <div class="table-box">
+                    <h3>Distribución de la Población por Condición (2018)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Condición de Pobreza / Vulnerabilidad</th>
+                                <th>Porcentaje (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Pobreza moderada</td><td>34.5%</td></tr>
+                            <tr><td>Pobreza extrema</td><td>7.4%</td></tr>
+                            <tr><td>Vulnerable por carencias sociales</td><td>29.3%</td></tr>
+                            <tr><td>Vulnerable por ingresos</td><td>6.2%</td></tr>
+                            <tr><td>No pobre y no vulnerable</td><td>22.6%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="explanation">
+                <h4>Explicación y Justificación del Gráfico</h4>
+                <p><strong>Información:</strong> Muestra la clasificación exhaustiva de la población mexicana en 2018 según la medición multidimensional de CONEVAL.<br>
+                <strong>¿Por qué es adecuado?</strong> El <em>Gráfico Circular o de Anillo (Pie/Donut Chart)</em> representa adecuadamente proporciones relativas respecto a un "todo" (100% de la población). Facilita entender la magnitud de la población no pobre frente a las distintas categorías de vulnerabilidad y pobreza.</p>
+            </div>
+        </div>
+
+        <!-- GRÁFICO 4 -->
+        <div class="card">
+            <div class="card-header">
+                <h2>4. Estructura de Pobreza: Población Indígena vs No Indígena (Barras Apiladas)</h2>
+            </div>
+            <div class="content-container">
+                <div>
+                    <div id="chart_stacked" class="chart-box"></div>
+                </div>
+                <div class="table-box">
+                    <h3>Brecha Étnica de Pobreza en 2018 (%)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Grupo Poblacional</th>
+                                <th>Pobreza Moderada (%)</th>
+                                <th>Pobreza Extrema (%)</th>
+                                <th>No Pobre (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Población Indígena</td><td>39.2%</td><td>35.6%</td><td>25.2%</td></tr>
+                            <tr><td>Población No Indígena</td><td>33.8%</td><td>5.6%</td><td>60.6%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="explanation">
+                <h4>Explicación y Justificación del Gráfico</h4>
+                <p><strong>Información:</strong> Ilustra la brecha de desigualdad étnica dividiendo la tasa total de pobreza entre moderada y extrema para hablantes y no hablantes de lengua indígena en 2018.<br>
+                <strong>¿Por qué es adecuado?</strong> El <em>Gráfico de Barras Apiladas (Stacked Bar Chart)</em> es óptimo para mostrar la composición interna de subgrupos dentro de un total acumulado, evidenciando que más del 74% de la población indígena vive en alguna condición de pobreza y exponiendo la severidad de la pobreza extrema en este segmento.</p>
+            </div>
+        </div>
+
+        <!-- GRÁFICO 5 -->
+        <div class="card">
+            <div class="card-header">
+                <h2>5. Disparidad Regional: Pobreza Estatal 2018 (Gráfico de Área)</h2>
+            </div>
+            <div class="content-container">
+                <div>
+                    <div id="chart_area" class="chart-box"></div>
+                </div>
+                <div class="table-box">
+                    <h3>Estados con Mayor y Menor Pobreza (2018)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Entidad Federativa</th>
+                                <th>Tipo de Región / Extremo</th>
+                                <th>Porcentaje de Pobreza (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Chiapas</td><td>Mayor Pobreza (Sur)</td><td>76.4%</td></tr>
+                            <tr><td>Guerrero</td><td>Mayor Pobreza (Sur)</td><td>66.5%</td></tr>
+                            <tr><td>Oaxaca</td><td>Mayor Pobreza (Sur)</td><td>66.4%</td></tr>
+                            <tr><td>Veracruz</td><td>Mayor Pobreza (Sur)</td><td>61.8%</td></tr>
+                            <tr><td>Aguascalientes</td><td>Menor Pobreza (Centro-Norte)</td><td>26.2%</td></tr>
+                            <tr><td>Coahuila</td><td>Menor Pobreza (Norte)</td><td>22.5%</td></tr>
+                            <tr><td>Baja California Sur</td><td>Menor Pobreza (Norte)</td><td>18.1%</td></tr>
+                            <tr><td>Nuevo León</td><td>Menor Pobreza (Norte)</td><td>14.5%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="explanation">
+                <h4>Explicación y Justificación del Gráfico</h4>
+                <p><strong>Información:</strong> Muestra el contraste entre los cuatro estados con mayor prevalencia de pobreza y los cuatro estados con menor prevalencia en 2018.<br>
+                <strong>¿Por qué es adecuado?</strong> El <em>Gráfico de Área / Continuo (Area Chart)</em> enfatiza el volumen y la brecha drástica entre los extremos de la distribución geográfica en México, subrayando la pronunciada desigualdad entre el sur-sureste del país y el norte/centro.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SECCIÓN DE CONCLUSIONES -->
+    <div class="conclusion-section">
+        <h2>Conclusiones del Análisis de Pobreza (CONEVAL 2008–2018)</h2>
+        <ul>
+            <li><strong>Avances en Carencias vs. Reto de Ingresos:</strong> Durante la década analizada, se registró un progreso generalizado en la reducción de carencias sociales básicas, destacando la cobertura de salud (la carencia cayó de 38.4% a 16.2%). Sin embargo, la pobreza general disminuyó muy lentamente en términos porcentuales (de 44.4% a 41.9%) debido a la falta de crecimiento sostenido en el ingreso familiar y a la constante falta de acceso a la seguridad social (que afecta a más de la mitad de la población).</li>
+            <li><strong>Persistencia de Brechas de Desigualdad:</strong> La pobreza continúa afectando de manera desproporcionada a grupos vulnerables. La brecha étnica es severa: el 74.9% de la población hablante de lengua indígena vive en pobreza, comparado con el 39.4% de la población no indígena.</li>
+            <li><strong>Heterogeneidad Territorial:</strong> No existe una convergencia regional en el país. Mientras que estados del norte y centro como Nuevo León (14.5%) y Baja California Sur (18.1%) mantienen niveles bajos de pobreza, las entidades del sur (Chiapas, Guerrero, Oaxaca y Veracruz) se mantienen con tasas superiores al 60%, concentrando la mayor urgencia de intervención de política pública.</li>
+        </ul>
+    </div>
+
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawCharts);
+
+        function drawCharts() {
+            // 1. Line Chart
+            var dataLine = google.visualization.arrayToDataTable([
+                ['Año', 'Pobreza Total (Millones)', 'Pobreza Extrema (Millones)'],
+                ['2008', 49.5, 12.3],
+                ['2010', 52.8, 12.9],
+                ['2012', 53.3, 11.4],
+                ['2014', 55.3, 11.5],
+                ['2016', 53.4, 9.3],
+                ['2018', 52.4, 9.3]
+            ]);
+            var optionsLine = {
+                title: 'Evolución de la Población en Pobreza (2008-2018)',
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                colors: ['#1e3a8a', '#e11d48'],
+                chartArea: { width: '80%', height: '70%' }
+            };
+            new google.visualization.LineChart(document.getElementById('chart_line')).draw(dataLine, optionsLine);
+
+            // 2. Bar Chart
+            var dataBar = google.visualization.arrayToDataTable([
+                ['Carencia Social', '2008 (%)', '2018 (%)'],
+                ['Rezago educ.', 21.9, 16.9],
+                ['Salud', 38.4, 16.2],
+                ['Seg. Social', 65.0, 57.3],
+                ['Vivienda', 17.7, 11.1],
+                ['Serv. Básicos', 22.9, 19.8],
+                ['Alimentación', 21.7, 20.4]
+            ]);
+            var optionsBar = {
+                title: 'Comparativo de Carencias Sociales (% de la población)',
+                colors: ['#0284c7', '#10b981'],
+                legend: { position: 'bottom' },
+                chartArea: { width: '80%', height: '70%' }
+            };
+            new google.visualization.ColumnChart(document.getElementById('chart_bar')).draw(dataBar, optionsBar);
+
+            // 3. Pie Chart
+            var dataPie = google.visualization.arrayToDataTable([
+                ['Condición', 'Porcentaje'],
+                ['Pobreza moderada', 34.5],
+                ['Pobreza extrema', 7.4],
+                ['Vulnerable por carencias', 29.3],
+                ['Vulnerable por ingresos', 6.2],
+                ['No pobre y no vulnerable', 22.6]
+            ]);
+            var optionsPie = {
+                title: 'Distribución de la Población según Condición de Vulnerabilidad (2018)',
+                pieHole: 0.4,
+                colors: ['#3b82f6', '#ef4444', '#f59e0b', '#8b5cf6', '#10b981'],
+                chartArea: { width: '90%', height: '80%' }
+            };
+            new google.visualization.PieChart(document.getElementById('chart_pie')).draw(dataPie, optionsPie);
+
+            // 4. Stacked Bar Chart
+            var dataStacked = google.visualization.arrayToDataTable([
+                ['Grupo', 'Pobreza Extrema', 'Pobreza Moderada', 'No Pobre'],
+                ['Indígena', 35.6, 39.2, 25.2],
+                ['No Indígena', 5.6, 33.8, 60.6]
+            ]);
+            var optionsStacked = {
+                title: 'Composición de Pobreza por Pertenencia Étnica 2018 (%)',
+                isStacked: 'percent',
+                colors: ['#dc2626', '#2563eb', '#94a3b8'],
+                legend: { position: 'bottom' },
+                chartArea: { width: '80%', height: '70%' }
+            };
+            new google.visualization.BarChart(document.getElementById('chart_stacked')).draw(dataStacked, optionsStacked);
+
+            // 5. Area Chart
+            var dataArea = google.visualization.arrayToDataTable([
+                ['Estado', 'Porcentaje de Pobreza (%)'],
+                ['Chiapas', 76.4],
+                ['Guerrero', 66.5],
+                ['Oaxaca', 66.4],
+                ['Veracruz', 61.8],
+                ['Aguascalientes', 26.2],
+                ['Coahuila', 22.5],
+                ['BC Sur', 18.1],
+                ['Nuevo León', 14.5]
+            ]);
+            var optionsArea = {
+                title: 'Disparidad Regional: Estados con Mayor vs. Menor Pobreza (2018)',
+                colors: ['#e11d48'],
+                legend: { position: 'none' },
+                hAxis: { title: 'Entidades Federativas' },
+                vAxis: { title: 'Porcentaje (%)' },
+                chartArea: { width: '80%', height: '70%' }
+            };
+            new google.visualization.AreaChart(document.getElementById('chart_area')).draw(dataArea, optionsArea);
+        }
+
+        window.addEventListener('resize', drawCharts);
+    </script>
+</body>
+</html>
+```eof
